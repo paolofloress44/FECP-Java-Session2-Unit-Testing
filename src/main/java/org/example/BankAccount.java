@@ -12,21 +12,26 @@ public class BankAccount {
     }
     public double addDeposit(double depositAmnt){
         if(depositAmnt<=0){
-            System.out.println("Invalid input. Enter valid amount");
+            System.out.println("Invalid input. Enter a positive amount for deposit.");
         }else{
             this.availableBalance += depositAmnt;
             System.out.println("Php " + depositAmnt + " deposited");
+            return depositAmnt;
         }
-        return 0.0;
+        return depositAmnt;
     }
     public double withdrawThat(double withdrawAmnt){
-        if(withdrawAmnt<=0 || withdrawAmnt > this.availableBalance){
-            System.out.println("Invalid input. Enter valid amount");
-        }else{
+        if(withdrawAmnt<=0){
+            System.out.println("Invalid input. Enter a positive amount for withdrawal.");
+        }else if (withdrawAmnt > this.availableBalance){
+            System.out.println("Insufficient balance. Available: Php " + this.availableBalance);
+            return this.availableBalance;
+        } else {
             this.availableBalance -= withdrawAmnt;
-            System.out.println("Php " + withdrawAmnt + " withdrawed");
+            System.out.println("Php " + withdrawAmnt + " withdrawn");
+            return withdrawAmnt;
         }
-        return 0.0;
+        return withdrawAmnt;
     }
     public void displayInformation(){
         System.out.println("Account Holder: " + this.accountHolderName);

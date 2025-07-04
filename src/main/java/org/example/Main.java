@@ -2,6 +2,7 @@ package org.example;
 
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -41,14 +42,20 @@ public class Main {
         sc.close();
     }
     private static int getUserChoice(){
-        while(!sc.hasNextInt()){
-            System.out.println("Invalid ");
-            sc.next();
-            System.out.println("Enter choice (1-5): ");
+        while (true) {
+            try {
+                int choice = sc.nextInt();
+                sc.nextLine();
+                if (choice >= 1 && choice <= 6) {
+                    return choice;
+                } else {
+                    System.out.print("Invalid choice. Please enter a number between 1 and 6: ");
+                }
+            } catch (InputMismatchException e) {
+                System.out.print("Invalid input. Please enter a number: ");
+                sc.next();
+            }
         }
-        int choice = sc.nextInt();
-        sc.nextLine();
-        return choice;
     }
     private static void createAccnt(){
         System.out.print("Enter Account Number: ");
@@ -82,10 +89,13 @@ public class Main {
                 System.out.println("Initial deposit cannot be negative.");
                 return;
             }
+        }else{
+            System.out.println("No initial deposit made");
+            System.out.println("Account created successfully!");
         }
         BankAccount newAccount = new BankAccount(accountNum, accountHolder, initDepositAmnt);
         bankAccount.add(newAccount);
-        System.out.println("Account created syccessfully!");
+        System.out.println("Account created successfully!");
     }
     private static BankAccount findAccount(int accountNumber){
         for(BankAccount account : bankAccount){
